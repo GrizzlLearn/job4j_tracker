@@ -2,8 +2,8 @@ package ru.job4j.oop;
 
 public class Cat {
 
-    String meal;
-    String name;
+    private String meal;
+    private String name;
 
     public void meal(String meal) {
         this.meal = meal;
