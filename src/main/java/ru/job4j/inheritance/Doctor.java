@@ -12,5 +12,9 @@ public class Doctor extends Profession {
         return this.experienceInYear;
     }
 
-    
+    public static void main(String[] args) {
+        Patient patient = new Patient("Oleg", "male", "pain");
+        Diagnosis diagnosis = new Diagnosis(patient.getDiagnosis());
+        System.out.println(diagnosis.heal(patient));
+    }
 }

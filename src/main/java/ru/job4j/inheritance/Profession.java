@@ -6,10 +6,6 @@ public class Profession {
     private String education;
     private String birthday;
 
-    public Profession() {
-
-    }
-
     public Profession(String name, String surname, String education, String birthday) {
         this.name = name;
         this.surname = surname;
@@ -31,6 +27,13 @@ public class Profession {
 
     public String getBirthday() {
         return this.birthday;
+    }
+
+    public static void about(Profession profession) {
+        System.out.println(profession.getName());
+        System.out.println(profession.getSurname());
+        System.out.println(profession.getEducation());
+        System.out.println(profession.getBirthday());
     }
 }
 

@@ -11,4 +11,9 @@ public class Dentist extends Doctor {
     public boolean isHasDoctorate() {
         return this.hasDoctorate;
     }
+
+    public static void main(String[] args) {
+        Dentist dentist = new Dentist("Dmitry", "Levin", "Doctor", "12.22.1956", 40, true);
+        about(dentist);
+    }
 }
