@@ -65,7 +65,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenTestFindByNameWithNUllCheckSecondItemName() {
+    public void whenTestFindByNameWithoutNUllCheckResultLength() {
         Tracker tracker = new Tracker();
         Item first = new Item("First");
         Item second = new Item("Second");
@@ -81,7 +81,7 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenTestFindAllWithoutNull() {
+    public void whenTestFindAllWithoutNullCheckResultLength() {
         Tracker tracker = new Tracker();
         Item first = new Item("First");
         Item second = new Item("Second");
