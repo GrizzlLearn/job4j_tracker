@@ -65,35 +65,6 @@ public class TrackerTest {
     }
 
     @Test
-    public void whenTestFindByNameWithoutNUllCheckResultLength() {
-        Tracker tracker = new Tracker();
-        Item first = new Item("First");
-        Item second = new Item("Second");
-        tracker.add(first);
-        tracker.add(second);
-        tracker.add(new Item());
-        tracker.add(new Item("Second"));
-        tracker.add(new Item("First"));
-        tracker.add(new Item());
-        tracker.add(new Item("First"));
-        Item[] result = tracker.findByName(second.getName());
-        assertThat(result.length, is(2));
-    }
-
-    @Test
-    public void whenTestFindAllWithoutNullCheckResultLength() {
-        Tracker tracker = new Tracker();
-        Item first = new Item("First");
-        Item second = new Item("Second");
-        tracker.add(first);
-        tracker.add(new Item());
-        tracker.add(new Item());
-        tracker.add(second);
-        Item[] result = tracker.findAll();
-        assertThat(result.length, is(2));
-    }
-
-    @Test
     public void whenReplace() {
         Tracker tracker = new Tracker();
         Item bug = new Item();
