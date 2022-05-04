@@ -26,4 +26,3 @@ public class MagicBall {
         System.out.println(answer.magicAnswer(input.nextLine()));
     }
 }
-
