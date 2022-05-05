@@ -4,25 +4,17 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class MagicBall {
-
-     public static class Answer {
-         int random = new Random().nextInt(3);
-
-         public String magicAnswer(String question) {
-            if (random == 0) {
-                return "Ответ на твой вопрос: " + question + " -> Да";
-            } else if (random == 1) {
-                return "Ответ на твой вопрос: " + question + " -> Нет";
-            } else {
-                return "Ответ на твой вопрос: " + question + " -> Может быть";
-            }
-         }
-     }
-
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        int random = new Random().nextInt(3);
         System.out.print("Я великий Оракул. Что ты хочешь узнать? ");
-        Answer answer = new Answer();
-        System.out.println(answer.magicAnswer(input.nextLine()));
+        String question = input.nextLine();
+        if (random == 0) {
+            System.out.println("Ответ на твой вопрос: " + question + " -> Да");
+        } else if (random == 1) {
+            System.out.println("Ответ на твой вопрос: " + question + " -> Нет");
+        } else {
+            System.out.println("Ответ на твой вопрос: " + question + " -> Может быть");
+        }
     }
 }
