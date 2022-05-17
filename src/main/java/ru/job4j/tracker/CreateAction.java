@@ -1,7 +1,5 @@
 package ru.job4j.tracker;
 
-import org.jetbrains.annotations.NotNull;
-
 public class CreateAction implements UserAction {
     private final Output out;
 
