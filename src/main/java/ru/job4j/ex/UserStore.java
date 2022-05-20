@@ -4,7 +4,10 @@ public class UserStore {
     public static User findUser(User[] users, String login) throws UserNotFoundException {
         User user = null;
         for (User u : users) {
-            user = u.getUsername().equals(login) ? u : null;
+           if (login.equals(u.getUsername())) {
+               user = u;
+               break;
+           }
         }
         if (user == null) {
             throw new UserNotFoundException("Don`t find user");
@@ -13,11 +16,10 @@ public class UserStore {
     }
 
     public static boolean validate(User user) throws UserInvalidException {
-        if (user.isValid() && user.getUsername().length() >= 3) {
-            return true;
-        } else {
+        if (!user.isValid() || user.getUsername().length() < 3) {
             throw new UserInvalidException("User invalid or username length less than 3");
         }
+        return true;
     }
 
     public static void main(String[] args) {
