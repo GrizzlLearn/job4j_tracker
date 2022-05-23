@@ -47,7 +47,7 @@ public class ValidateInputTest {
     }
 
     @Test
-    public void whenMinusOneInput() {
+    public void whenMinusSixInput() {
         Output out = new StubOutput();
         Input in = new StubInput(
                 new String[]{"-6"}
