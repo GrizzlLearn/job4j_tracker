@@ -3,7 +3,7 @@ package ru.job4j.tracker;
 public class ValidateInput implements Input {
     private final Output out;
     private final Input in;
-
+    
     public ValidateInput(Output out, Input in) {
         this.out = out;
         this.in = in;
@@ -23,7 +23,7 @@ public class ValidateInput implements Input {
                 value = in.askInt(question);
                 invalid = false;
             } catch (NumberFormatException nfe) {
-                System.out.println("Please enter number, not string.");
+                out.println("Please enter number, not string.");
             }
         } while (invalid);
         return value;
