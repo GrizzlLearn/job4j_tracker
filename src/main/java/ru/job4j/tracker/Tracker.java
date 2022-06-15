@@ -1,68 +1,58 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tracker {
-    private final Item[] items = new Item[100];
+    private final List<Item> items = new ArrayList<>();
     private int ids = 1;
-    private int size = 0;
 
     public Item add(Item item) {
         item.setId(ids++);
-        items[size++] = item;
+        items.add(item);
         return item;
     }
 
-    private int indexOf(int id) {
-        int rsl = -1;
-        for (int i = 0; i < size; i++) {
-            if (items[i].getId() == id) {
-                rsl = i;
+    public Item findById(int id) {
+        Item rsl = null;
+        for (Item item : items) {
+            if (item != null && item.getId() == id) {
+                rsl = item;
                 break;
             }
         }
         return rsl;
     }
 
-    public Item findById(int id) {
-        int index = indexOf(id);
-        return index != -1 ? items[index] : null;
-    }
-
-    public Item[] findByName(String name) {
-        Item[] rsl = new Item[size];
-        int tmp = 0;
-        for (int i = 0; i < size; i++) {
-            Item item = items[i];
+    public List<Item> findByName(String name) {
+        List<Item> rsl = new ArrayList<>();
+        for (Item item : items) {
             if (item.getName().equals(name)) {
-                rsl[tmp] = item;
-                tmp++;
+                rsl.add(item);
             }
         }
-        return Arrays.copyOf(rsl, tmp);
+        return rsl;
     }
 
-    public Item[] findAll() {
-        return Arrays.copyOf(items, size);
+    public List<Item> findAll() {
+        return items;
     }
 
     public boolean replace(int id, Item item) {
-        int index = indexOf(id);
+        int index = items.indexOf(findById(id));
         boolean rsl = index != -1;
         if (rsl) {
             item.setId(id);
-            items[index] = item;
+            items.set(index, item);
         }
         return rsl;
     }
 
     public boolean delete(int id) {
-        int index = indexOf(id);
+        int index = items.indexOf(findById(id));
         boolean rsl = index != -1;
         if (rsl) {
-            System.arraycopy(items, index + 1, items, index, size - index - 1);
-            items[size - 1] = null;
-            size--;
+            items.set(index, null);
         }
         return rsl;
     }
