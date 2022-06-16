@@ -44,7 +44,7 @@ public class Tracker {
     }
 
     public boolean replace(int id, Item item) {
-        int index = items.indexOf(findById(id));
+        int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
             item.setId(id);
@@ -54,7 +54,7 @@ public class Tracker {
     }
 
     public boolean delete(int id) {
-        int index = items.indexOf(findById(id));
+        int index = indexOf(id);
         boolean rsl = index != -1;
         if (rsl) {
             items.remove(index);
