@@ -13,6 +13,17 @@ public class Tracker {
         return item;
     }
 
+    private int indexOf(int id) {
+        int rsl = -1;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == id) {
+                rsl = i;
+                break;
+            }
+        }
+        return rsl;
+    }
+
     public Item findById(int id) {
         Item rsl = null;
         for (Item item : items) {
