@@ -20,6 +20,13 @@
 V put(K key, V value);
 V get(K key);
 keySet() - возвращает коллекцию java.util.Set состоящую только из ключей.
+entrySet() - возвращает коллекцию java.util.Set состоящую из объекта Map.Entry, которая сразу содержит и ключ и значение.
+
+for (Map.Entry<String, String> entry : map.entrySet()) {
+    String key = entry.getKey();
+    String value = entry.getValue();
+    System.out.println(key + " = " + value);
+}
 
 ---
 ---
