@@ -23,10 +23,13 @@ public class OrderConvertTest {
         List<Order> orders = new ArrayList<>();
         Order order1 = new Order("3sfe", "Dress");
         Order order2 = new Order("3sfc", "Shirt");
+        Order order3 = new Order("3sfc", "Shirt");
+        Order order4 = new Order("3sfc", "Shirt");
         orders.add(order1);
         orders.add(order2);
+        orders.add(order3);
+        orders.add(order4);
         HashMap<String, Order> map = OrderConvert.process(orders);
-        assertThat(map.get("3sfe"), is(order1));
-        assertThat(map.get("3sfc"), is(order2));
+        assertEquals(2, map.size());
     }
 }
