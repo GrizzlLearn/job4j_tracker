@@ -26,13 +26,7 @@ public class BankService {
     public void deleteAccount(String passport, String requisite) {
         User user = findByPassport(passport);
         if (user != null) {
-            List<Account> accountList = users.get(user);
-            for (Account account : accountList) {
-                if (account.getRequisite().equals(requisite)) {
-                    accountList.remove(account);
-                    break;
-                }
-            }
+            users.get(user).remove(new Account(requisite, 0));
         }
     }
 
