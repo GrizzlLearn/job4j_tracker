@@ -69,14 +69,51 @@ public class JobTest {
     }
 
     @Test
-    public void whenComparatorJobAscByNameThenJobAscByPriority() {
-        Comparator<Job> comb = new JobAscByName()
+    public void whenComparatorJobDescByNameThenJobDescByNameLnThenJobDescByPriority() {
+        Comparator<Job> comb = new JobDescByName()
                 .thenComparing(new JobDescByNameLn())
                 .thenComparing(new JobDescByPriority());
-        int rsl = comb.compare(
-                new Job("ccccc", 121),
-                new Job("dd", 12)
-        );
-        assertThat(rsl, lessThan(0));
+
+        List<Job> items = new ArrayList<>() {{
+            add(new Job("ccccc", 145));
+            add(new Job("ccccc", 121));
+            add(new Job("dd", 12));
+            add(new Job("ccccc", 117));
+        }};
+        Collections.sort(items, comb);
+        List<Job> expected = new ArrayList<>() {{
+            add(new Job("dd", 12));
+            add(new Job("ccccc", 145));
+            add(new Job("ccccc", 121));
+            add(new Job("ccccc", 117));
+
+        }};
+        assertThat(items, is(expected));
+    }
+
+    @Test
+    public void whenComparatorJobAscByNameThenJobAscByNameLnThenJobAscByPriority() {
+        Comparator<Job> comb = new JobAscByName()
+                .thenComparing(new JobAscByNameLn())
+                .thenComparing(new JobAscByPriority());
+
+        List<Job> items = new ArrayList<>() {{
+            add(new Job("dd", 12));
+            add(new Job("dd", 8));
+            add(new Job("dd", 4));
+            add(new Job("ccccc", 145));
+            add(new Job("ccccc", 121));
+            add(new Job("ccccc", 117));
+        }};
+        Collections.sort(items, comb);
+        List<Job> expected = new ArrayList<>() {{
+            add(new Job("ccccc", 117));
+            add(new Job("ccccc", 121));
+            add(new Job("ccccc", 145));
+            add(new Job("dd", 4));
+            add(new Job("dd", 8));
+            add(new Job("dd", 12));
+        }};
+        assertThat(items, is(expected));
     }
 }
