@@ -102,11 +102,15 @@ public class JobTest {
             add(new Job("dd", 8));
             add(new Job("dd", 4));
             add(new Job("ccccc", 145));
+            add(new Job("ccc", 145));
+            add(new Job("ccc", 146));
             add(new Job("ccccc", 121));
             add(new Job("ccccc", 117));
         }};
         Collections.sort(items, comb);
         List<Job> expected = new ArrayList<>() {{
+            add(new Job("ccc", 145));
+            add(new Job("ccc", 146));
             add(new Job("ccccc", 117));
             add(new Job("ccccc", 121));
             add(new Job("ccccc", 145));
