@@ -9,21 +9,15 @@ public class StringCompare implements Comparator<String> {
         int num = Integer.compare(left.length(), right.length());
         int minStrLength = Math.min(left.length(), right.length());
 
-        if (num == 0) {
-            for (int i = 0; i < minStrLength; i++) {
-                if (left.charAt(i) != right.charAt(i)) {
-                    result = left.charAt(i) - right.charAt(i);
-                    break;
-                }
+        for (int i = 0; i < minStrLength; i++) {
+            if (left.charAt(i) != right.charAt(i)) {
+                result += Character.compare(left.charAt(i), right.charAt(i));
+                break;
             }
         }
-
-        if (result == 0 && num > 0) {
-            result = 1;
-        } else if (result == 0 && num < 0) {
+        if (result == 0 && num < 0) {
             result = -1;
         }
-
         return result;
     }
 }
