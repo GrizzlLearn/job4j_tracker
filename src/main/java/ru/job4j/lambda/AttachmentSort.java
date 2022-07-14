@@ -25,7 +25,7 @@ public class AttachmentSort {
         Comparator<Attachment> comparatorName = new Comparator<>() {
             @Override
             public int compare(Attachment left, Attachment right) {
-                return String.CASE_INSENSITIVE_ORDER.compare(left.getName(), right.getName());
+                return left.getName().compareTo(right.getName());
             }
         };
         attachments.sort(comparatorName);
