@@ -8,8 +8,8 @@ public class AttachmentSort {
     public static void main(String[] args) {
         List<Attachment> attachments = Arrays.asList(
                 new Attachment("image 1", 100),
-                new Attachment("image 3", 13),
-                new Attachment("image 2", 34)
+                new Attachment("image 345", 13),
+                new Attachment("image 23", 34)
         );
         Comparator comparatorSize =  new Comparator() {
             @Override
@@ -29,6 +29,13 @@ public class AttachmentSort {
             }
         };
         attachments.sort(comparatorName);
+        System.out.println(attachments);
+
+        Comparator<Attachment> cmpText = (left, right) -> left.getName().compareTo(right.getName());
+        attachments.sort(cmpText);
+        System.out.println(attachments);
+        Comparator<Attachment> cmpDescSize = (left, right) -> Integer.compare(right.getName().length(), left.getName().length());
+        attachments.sort(cmpDescSize);
         System.out.println(attachments);
     }
 }

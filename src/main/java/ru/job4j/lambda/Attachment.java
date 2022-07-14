@@ -1,7 +1,5 @@
 package ru.job4j.lambda;
 
-import org.jetbrains.annotations.NotNull;
-
 public class Attachment implements Comparable<Attachment> {
     private String name;
     private int size;
@@ -28,7 +26,7 @@ public class Attachment implements Comparable<Attachment> {
     }
 
     @Override
-    public int compareTo(@NotNull Attachment o) {
+    public int compareTo(Attachment o) {
         return this.name.compareTo(o.getName());
     }
 }
