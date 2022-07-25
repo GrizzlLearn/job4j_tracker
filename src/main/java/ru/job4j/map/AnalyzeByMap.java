@@ -8,10 +8,10 @@ public class AnalyzeByMap {
         double result = 0.0d;
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                result += subject.score() / (double) pupils.size();
+                result += subject.score() / (double) pupil.subjects().size();
             }
         }
-        return result;
+        return result / pupils.size();
     }
 
     public static List<Label> averageScoreByPupil(List<Pupil> pupils) {
