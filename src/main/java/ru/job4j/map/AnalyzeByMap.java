@@ -23,22 +23,26 @@ public class AnalyzeByMap {
             }
             result.add(new Label(pupil.name(), average));
         }
+        return result;
+    }
 
+    private static Map<String, Integer> listToMap(List<Pupil> pupils) {
+        Map<String, Integer> result = new LinkedHashMap<>();
+        for (Pupil pupil : pupils) {
+            for (Subject subject : pupil.subjects()) {
+                if (result.containsKey(subject.name())) {
+                    result.put(subject.name(), result.get(subject.name()) + subject.score());
+                } else {
+                    result.put(subject.name(), subject.score());
+                }
+            }
+        }
         return result;
     }
 
     public static List<Label> averageScoreBySubject(List<Pupil> pupils) {
         List<Label> result = new ArrayList<>(List.of());
-        Map<String, Integer> tmp = new LinkedHashMap<>();
-        for (Pupil pupil : pupils) {
-            for (Subject subject : pupil.subjects()) {
-                if (tmp.containsKey(subject.name())) {
-                    tmp.put(subject.name(), tmp.get(subject.name()) + subject.score());
-                } else {
-                    tmp.put(subject.name(), subject.score());
-                }
-            }
-        }
+        Map<String, Integer> tmp = listToMap(pupils);
         for (Map.Entry<String, Integer> entry : tmp.entrySet()) {
             result.add(new Label(entry.getKey(), (double) entry.getValue() / pupils.size()));
         }
@@ -60,22 +64,11 @@ public class AnalyzeByMap {
 
     public static Label bestSubject(List<Pupil> pupils) {
         List<Label> result = new ArrayList<>(List.of());
-        Map<String, Integer> tmp = new LinkedHashMap<>();
-        for (Pupil pupil : pupils) {
-            for (Subject subject : pupil.subjects()) {
-                if (tmp.containsKey(subject.name())) {
-                    tmp.put(subject.name(), tmp.get(subject.name()) + subject.score());
-                } else {
-                    tmp.put(subject.name(), subject.score());
-                }
-            }
-        }
+        Map<String, Integer> tmp = listToMap(pupils);
         for (Map.Entry<String, Integer> entry : tmp.entrySet()) {
             result.add(new Label(entry.getKey(), entry.getValue()));
         }
-
         Collections.sort(result, new LabelAscByScore());
-
         return result.get(result.size() - 1);
     }
 }
