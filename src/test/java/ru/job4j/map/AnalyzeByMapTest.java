@@ -48,35 +48,8 @@ class AnalyzeByMapTest {
                 List.of(
                         new Pupil("Ivanov",
                                 List.of(
-                                        new Subject("Math", 100),
-                                        new Subject("Lang", 100),
-                                        new Subject("Philosophy", 100)
-                                )
-                        ),
-                        new Pupil("Petrov",
-                                List.of(
-                                        new Subject("Math", 60),
-                                        new Subject("Lang", 60),
-                                        new Subject("Philosophy", 60)
-                                )
-                        )
-                )
-        );
-        assertThat(average).hasSameElementsAs(List.of(
-                new Label("Math", 80D),
-                new Label("Lang", 80D),
-                new Label("Philosophy", 80D)
-        ));
-    }
-
-    /*@Test
-    public void whenListOfSubjectAverage3() {
-        List<Label> average = AnalyzeByMap.averageScoreBySubject(
-                List.of(
-                        new Pupil("Ivanov",
-                                List.of(
-                                        new Subject("Math", 100),
-                                        new Subject("Lang", 100),
+                                        new Subject("Math", 70),
+                                        new Subject("Lang", 90),
                                         new Subject("Philosophy", 100)
                                 )
                         ),
@@ -90,18 +63,18 @@ class AnalyzeByMapTest {
                         new Pupil("Sidorov",
                                 List.of(
                                         new Subject("Math", 80),
-                                        new Subject("Lang", 80),
-                                        new Subject("Philosophy", 80)
+                                        new Subject("Lang", 60),
+                                        new Subject("Philosophy", 50)
                                 )
                         )
                 )
         );
         assertThat(average).hasSameElementsAs(List.of(
-                new Label("Math", 80D),
-                new Label("Lang", 80D),
-                new Label("Philosophy", 80D)
+                new Label("Math", 70D),
+                new Label("Lang", 70D),
+                new Label("Philosophy", 70D)
         ));
-    }*/
+    }
 
     @Test
     public void whenBestPupil() {
