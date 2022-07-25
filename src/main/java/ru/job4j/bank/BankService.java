@@ -1,6 +1,7 @@
 package ru.job4j.bank;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Класс описывает простейшую логику работы банковского приложения
@@ -75,14 +76,10 @@ public class BankService {
      * @see User#getPassport()
      */
     public User findByPassport(String passport) {
-        User rsl = null;
-        for (User user : users.keySet()) {
-            if (user.getPassport().equals(passport)) {
-                rsl = user;
-                break;
-            }
-        }
-        return rsl;
+        return users.keySet().stream()
+                .filter(p -> p.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     /**
@@ -95,18 +92,15 @@ public class BankService {
      * @see Account#getRequisite()
      */
     public Account findByRequisite(String passport, String requisite) {
-        Account rsl = null;
         User user = findByPassport(passport);
+        Account result = null;
         if (user != null) {
-            List<Account> accountList = users.get(user);
-            for (Account acc : accountList) {
-                if (acc.getRequisite().equals(requisite)) {
-                    rsl = acc;
-                    break;
-                }
-            }
+            result = users.get(user).stream()
+                    .filter(a -> a.getRequisite().equals(requisite))
+                    .findFirst()
+                    .orElse(null);
         }
-        return rsl;
+        return result;
     }
 
     /**
