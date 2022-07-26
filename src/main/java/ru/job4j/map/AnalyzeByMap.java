@@ -30,11 +30,8 @@ public class AnalyzeByMap {
         Map<String, Integer> result = new LinkedHashMap<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                if (result.containsKey(subject.name())) {
-                    result.put(subject.name(), result.get(subject.name()) + subject.score());
-                } else {
-                    result.put(subject.name(), subject.score());
-                }
+                result.computeIfPresent(subject.name(), (k, v) -> subject.score() + v);
+                result.putIfAbsent(subject.name(), subject.score());
             }
         }
         return result;
