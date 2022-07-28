@@ -12,14 +12,14 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        int index = 0;
-        for (Task value : tasks) {
-            if (value.getPriority() > task.getPriority()) {
+        var intIndex = 0;
+        for (var taskValue : tasks) {
+            if (taskValue.getPriority() > task.getPriority()) {
                 break;
             }
-            index++;
+            intIndex++;
         }
-        this.tasks.add(index, task);
+        this.tasks.add(intIndex, task);
     }
 
     public Task take() {
