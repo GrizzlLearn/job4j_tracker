@@ -74,7 +74,7 @@ public class DepartmentsTest {
         assertThat(input).isEqualTo(expect);
     }
 
-    /*@Test
+    @Test
     public void whenSortDescWithoutMissedDepartments() {
         List<String> input = Arrays.asList(
                 "K1/SK1",
@@ -100,7 +100,7 @@ public class DepartmentsTest {
         );
         Departments.sortDesc(input);
         assertThat(input).isEqualTo(expect);
-    }*/
+    }
 
     /*@Test
     public void whenSortDescWithMissedDepartments() {
