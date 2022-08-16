@@ -48,6 +48,17 @@ public class Analyze {
     }
 
     public static Tuple bestSubject(Stream<Pupil> stream) {
-        return null;
+        return stream
+                .flatMap(p -> p.subjects().stream())
+                .collect(Collectors.groupingBy(
+                        Subject::name,
+                        LinkedHashMap::new,
+                        Collectors.summingDouble(Subject::score)
+                ))
+                .entrySet()
+                .stream()
+                .map(s -> new Tuple(s.getKey(), s.getValue()))
+                .max(Comparator.comparing(Tuple::score))
+                .orElse(new Tuple("nan", 0D));
     }
 }
