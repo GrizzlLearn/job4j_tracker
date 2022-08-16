@@ -30,8 +30,7 @@ public class Analyze {
                 .collect(Collectors.groupingBy(
                         Subject::name,
                         LinkedHashMap::new,
-                        Collectors.averagingDouble(Subject::score)
-                ))
+                        Collectors.averagingDouble(Subject::score)))
                 .entrySet()
                 .stream()
                 .map(s -> new Tuple(s.getKey(), s.getValue()))
@@ -44,7 +43,7 @@ public class Analyze {
                         .mapToDouble(Subject::score)
                         .sum()))
                 .max(Comparator.comparing(Tuple::score))
-                .orElse(new Tuple("nan", 0D));
+                .orElse(new Tuple("Default", 0D));
     }
 
     public static Tuple bestSubject(Stream<Pupil> stream) {
@@ -53,12 +52,11 @@ public class Analyze {
                 .collect(Collectors.groupingBy(
                         Subject::name,
                         LinkedHashMap::new,
-                        Collectors.summingDouble(Subject::score)
-                ))
+                        Collectors.summingDouble(Subject::score)))
                 .entrySet()
                 .stream()
                 .map(s -> new Tuple(s.getKey(), s.getValue()))
                 .max(Comparator.comparing(Tuple::score))
-                .orElse(new Tuple("nan", 0D));
+                .orElse(new Tuple("Default", 0D));
     }
 }
