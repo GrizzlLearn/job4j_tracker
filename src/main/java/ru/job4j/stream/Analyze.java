@@ -1,5 +1,6 @@
 package ru.job4j.stream;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,7 +28,12 @@ public class Analyze {
     }
 
     public static Tuple bestStudent(Stream<Pupil> stream) {
-        return null;
+        return stream
+                .map(p -> new Tuple(p.name(), p.subjects().stream()
+                        .mapToDouble(Subject::score)
+                        .sum()))
+                .max(Comparator.comparing(Tuple::score))
+                .orElse(new Tuple("nan", 0D));
     }
 
     public static Tuple bestSubject(Stream<Pupil> stream) {
