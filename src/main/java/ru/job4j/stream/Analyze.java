@@ -78,7 +78,7 @@ public class Analyze {
                         .mapToDouble(Subject::score)
                         .sum()))
                 .max(Comparator.comparing(Tuple::score))
-                .orElse(new Tuple("Default", 0D));
+                .orElse(null);
     }
 
     /**
@@ -98,6 +98,6 @@ public class Analyze {
                 .stream()
                 .map(s -> new Tuple(s.getKey(), s.getValue()))
                 .max(Comparator.comparing(Tuple::score))
-                .orElse(new Tuple("Default", 0D));
+                .orElse(null);
     }
 }
