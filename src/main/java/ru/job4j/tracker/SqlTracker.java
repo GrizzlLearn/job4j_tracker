@@ -78,7 +78,22 @@ public class SqlTracker implements Store {
 
     @Override
     public boolean replace(int id, Item item) {
-        return false;
+        int tmp = 0;
+
+        String sql = String.format("UPDATE %s SET name = ?, created = ? WHERE item_id = ?",
+                this.tableName);
+        Timestamp timestampFromLDT = Timestamp.valueOf(item.getCreated());
+
+        try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
+            ps.setString(1, item.getName());
+            ps.setTimestamp(2, timestampFromLDT);
+            ps.setInt(3, id);
+            tmp = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tmp > 0;
     }
 
     @Override
