@@ -37,11 +37,11 @@ public class StartUI {
         MemTracker memTracker = new MemTracker();
         List<UserAction> actions = Arrays.asList(
                 new CreateAction(output),
-                new ShowAllAction(output),
-                new EditAction(output),
+                new FindAllAction(output),
+                new ReplaceAction(output),
                 new DeleteAction(output),
-                new FindItemByIdAction(output),
-                new FindItemByNameAction(output),
+                new FindByIdAction(output),
+                new FindByNameAction(output),
                 new ExitAction(output));
         new StartUI(output).init(input, memTracker, actions);
     }

@@ -1,20 +1,20 @@
 package ru.job4j.tracker;
 
-public class EditAction implements UserAction {
+public class ReplaceAction implements UserAction {
     private final Output out;
 
-    public EditAction(Output out) {
+    public ReplaceAction(Output out) {
         this.out = out;
     }
 
     @Override
     public String name() {
-        return "Edit item";
+        return "Replace item";
     }
 
     @Override
     public boolean execute(Input input, MemTracker memTracker) {
-        out.println("=== Edit item ===");
+        out.println("=== Replace item ===");
         int id = input.askInt("Enter id: ");
         String name = input.askStr("Enter new ticket name: ");
         Item item = new Item(name);

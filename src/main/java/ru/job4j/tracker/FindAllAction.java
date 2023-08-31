@@ -2,21 +2,21 @@ package ru.job4j.tracker;
 
 import java.util.List;
 
-public class ShowAllAction implements UserAction {
+public class FindAllAction implements UserAction {
     private final Output out;
 
-    public ShowAllAction(Output out) {
+    public FindAllAction(Output out) {
         this.out = out;
     }
 
     @Override
     public String name() {
-        return "Show all Items";
+        return "Find all Items";
     }
 
     @Override
     public boolean execute(Input input, MemTracker memTracker) {
-        out.println("=== Show all items ===");
+        out.println("=== Find all items ===");
         List<Item> items = memTracker.findAll();
         if (items.size() > 0) {
             for (Item item : items) {

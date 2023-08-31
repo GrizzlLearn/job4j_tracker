@@ -37,7 +37,7 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", String.valueOf(item.getId()), replacedName, "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new EditAction(output),
+                new ReplaceAction(output),
                 new ExitAction(output)
         );
         new StartUI(output).init(in, memTracker, actions);
@@ -70,19 +70,19 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", String.valueOf(one.getId()), replaceName, "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new EditAction(out),
+                new ReplaceAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
                 "Menu:" + ln
-                        + "0. Edit item" + ln
+                        + "0. Replace item" + ln
                         + "1. Exit" + ln
-                        + "=== Edit item ===" + ln
+                        + "=== Replace item ===" + ln
                         + "Заявка изменена успешно." + ln
                         + "Menu:" + ln
-                        + "0. Edit item" + ln
+                        + "0. Replace item" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
         ));
@@ -97,19 +97,19 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new ShowAllAction(out),
+                new FindAllAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
         assertThat(out.toString(), is(
                 "Menu:" + ln
-                        + "0. Show all Items" + ln
+                        + "0. Find all Items" + ln
                         + "1. Exit" + ln
-                        + "=== Show all items ===" + ln
+                        + "=== Find all items ===" + ln
                         + one + ln
                         + "Menu:" + ln
-                        + "0. Show all Items" + ln
+                        + "0. Find all Items" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
         ));
@@ -124,7 +124,7 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", one.getName(), "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new FindItemByNameAction(out),
+                new FindByNameAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
@@ -152,7 +152,7 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", two.getName(), "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new FindItemByNameAction(out),
+                new FindByNameAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
@@ -179,7 +179,7 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", String.valueOf(one.getId()), "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new FindItemByIdAction(out),
+                new FindByIdAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
@@ -207,7 +207,7 @@ public class StartUITest {
                 new ArrayList<>(Arrays.asList("0", String.valueOf(two.getId()), "1"))
         );
         List<UserAction> actions = Arrays.asList(
-                new FindItemByIdAction(out),
+                new FindByIdAction(out),
                 new ExitAction(out)
         );
         new StartUI(out).init(in, memTracker, actions);
