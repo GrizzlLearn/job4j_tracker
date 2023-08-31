@@ -112,13 +112,27 @@ public class SqlTracker implements Store {
 
     @Override
     public List<Item> findAll() {
-        List<Item> result = new ArrayList<>();
         String sql = String.format("SELECT * FROM %s",
                 this.tableName);
 
+        return getItems(sql);
+    }
+
+    @Override
+    public List<Item> findByName(String key) {
+        String sql = String.format("SELECT * FROM %s WHERE name = %s",
+                this.tableName,
+                key);
+
+        return getItems(sql);
+    }
+
+    private List<Item> getItems(String sql) {
+        List<Item> result = new ArrayList<>();
+
         try (PreparedStatement ps = this.cn.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery()) {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 Item item = new Item();
                 item.setId(resultSet.getInt("item_id"));
                 item.setName(resultSet.getString("name"));
@@ -129,17 +143,24 @@ public class SqlTracker implements Store {
             e.printStackTrace();
         }
 
-
         return result;
     }
 
     @Override
-    public List<Item> findByName(String key) {
-        return null;
-    }
-
-    @Override
     public Item findById(int id) {
-        return null;
+        Item item = new Item();
+        String sql = String.format("SELECT * FROM %s WHERE item_id = %s",
+                this.tableName,
+                id);
+
+        try (PreparedStatement ps = this.cn.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
+            item.setId(resultSet.getInt("item_id"));
+            item.setName(resultSet.getString("name"));
+            item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 }
