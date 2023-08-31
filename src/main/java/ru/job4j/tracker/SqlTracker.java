@@ -3,6 +3,7 @@ package ru.job4j.tracker;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -111,7 +112,25 @@ public class SqlTracker implements Store {
 
     @Override
     public List<Item> findAll() {
-        return null;
+        List<Item> result = new ArrayList<>();
+        String sql = String.format("SELECT * FROM %s",
+                this.tableName);
+
+        try (PreparedStatement ps = this.cn.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
+            while(resultSet.next()) {
+                Item item = new Item();
+                item.setId(resultSet.getInt("item_id"));
+                item.setName(resultSet.getString("name"));
+                item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                result.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return result;
     }
 
     @Override
