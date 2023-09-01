@@ -13,7 +13,7 @@ public class ReplaceAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, MemTracker memTracker) {
+    public boolean execute(Input input, Store memTracker) {
         out.println("=== Replace item ===");
         int id = input.askInt("Enter id: ");
         String name = input.askStr("Enter new ticket name: ");
