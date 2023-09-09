@@ -25,7 +25,7 @@
             </activation>
         </profile>
         <profile>
-            <id>production</id>
+            <id>prod</id>
             <properties>
                 <liquibase.config>db/liquibase.properties</liquibase.config>
             </properties>

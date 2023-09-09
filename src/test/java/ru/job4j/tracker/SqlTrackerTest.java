@@ -59,4 +59,34 @@ public class SqlTrackerTest {
         assertThat(tracker.findById(item.getId())).isEqualTo(item);
     }
 
+    @Test
+    public void testReplace() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("One");
+        tracker.add(item);
+        Item newItem = new Item("New One");
+        tracker.replace(tracker.findById(item.getId()).getId(), newItem);
+        assertThat(tracker.findById(item.getId())).isEqualTo(newItem);
+    }
+
+    @Test
+    public void testDelete() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item one = new Item("One");
+        Item two = new Item("Two");
+        tracker.add(one);
+        tracker.add(two);
+        tracker.delete(one.getId());
+        assertThat(tracker.findById(one.getId())).isNull();
+    }
+
+    @Test
+    public void testFIndAll() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item one = new Item("One");
+        Item two = new Item("Two");
+        tracker.add(one);
+        tracker.add(two);
+        assertThat(tracker.findAll()).hasSize(2);
+    }
 }
