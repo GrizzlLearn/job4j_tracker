@@ -119,7 +119,7 @@ public class SqlTracker implements Store {
 
     @Override
     public List<Item> findByName(String key) {
-        String sql = String.format("SELECT * FROM %s WHERE name = %s",
+        String sql = String.format("SELECT * FROM %s WHERE name = '%s'",
                 this.tableName,
                 key);
 
@@ -129,37 +129,40 @@ public class SqlTracker implements Store {
     private List<Item> getItems(String sql) {
         List<Item> result = new ArrayList<>();
 
-        try (PreparedStatement ps = this.cn.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
-            while (resultSet.next()) {
-                Item item = new Item();
-                item.setId(resultSet.getInt("item_id"));
-                item.setName(resultSet.getString("name"));
-                item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-                result.add(item);
-            }
+        try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
+            result = fillingObject(ps);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
+    }
 
+    private List<Item> fillingObject(PreparedStatement ps) throws SQLException {
+        List<Item> result = new ArrayList<>();
+        ResultSet resultSet = ps.executeQuery();
+        while (resultSet.next()) {
+            Item item = new Item();
+            item.setId(resultSet.getInt("item_id"));
+            item.setName(resultSet.getString("name"));
+            item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+            result.add(item);
+        }
         return result;
     }
 
     @Override
     public Item findById(int id) {
-        Item item = new Item();
-        String sql = String.format("SELECT * FROM %s WHERE item_id = %s",
-                this.tableName,
-                id);
+        Item result = new Item();
+        String sql = String.format("SELECT * FROM %s WHERE item_id = ?",
+                this.tableName
+        );
 
-        try (PreparedStatement ps = this.cn.prepareStatement(sql);
-             ResultSet resultSet = ps.executeQuery()) {
-            item.setId(resultSet.getInt("item_id"));
-            item.setName(resultSet.getString("name"));
-            item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+        try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            result = fillingObject(ps).get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return item;
+        return result;
     }
 }

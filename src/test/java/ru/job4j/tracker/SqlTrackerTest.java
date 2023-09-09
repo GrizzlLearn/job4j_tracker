@@ -4,16 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.job4j.tracker.Item;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.*;
@@ -56,7 +52,17 @@ public class SqlTrackerTest {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
+        item.setId(tracker.findByName(item.getName()).get(0).getId());
         assertThat(tracker.findById(item.getId())).isEqualTo(item);
+    }
+
+    @Test
+    public void testFindByName() {
+        SqlTracker tracker = new SqlTracker(connection);
+        Item item = new Item("item");
+        tracker.add(item);
+        item.setId(tracker.findByName(item.getName()).get(0).getId());
+        assertThat(tracker.findByName(item.getName()).get(0)).isEqualTo(item);
     }
 
     @Test
@@ -64,6 +70,7 @@ public class SqlTrackerTest {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("One");
         tracker.add(item);
+        item.setId(tracker.findByName(item.getName()).get(0).getId());
         Item newItem = new Item("New One");
         tracker.replace(tracker.findById(item.getId()).getId(), newItem);
         assertThat(tracker.findById(item.getId())).isEqualTo(newItem);
@@ -75,9 +82,12 @@ public class SqlTrackerTest {
         Item one = new Item("One");
         Item two = new Item("Two");
         tracker.add(one);
+        one.setId(tracker.findByName(one.getName()).get(0).getId());
         tracker.add(two);
+        two.setId(tracker.findByName(two.getName()).get(0).getId());
         tracker.delete(one.getId());
-        assertThat(tracker.findById(one.getId())).isNull();
+        assertThat(tracker.findAll()).hasSize(1);
+        assertThat(tracker.findByName(two.getName()).get(0)).isEqualTo(two);
     }
 
     @Test
