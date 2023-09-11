@@ -57,15 +57,24 @@ public class Item {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Item item)) {
             return false;
         }
-        Item item = (Item) o;
-        return Objects.equals(name, item.name);
+
+        if (id != item.id) {
+            return false;
+        }
+        if (!Objects.equals(name, item.name)) {
+            return false;
+        }
+        return Objects.equals(created, item.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + created.hashCode();
+        return result;
     }
 }

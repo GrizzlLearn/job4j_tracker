@@ -19,7 +19,6 @@ public class SqlTracker implements Store {
 
     public SqlTracker(Connection cn) {
         this.cn = cn;
-        prepareTable(this.tableName);
     }
 
     private void init() {
@@ -38,20 +37,6 @@ public class SqlTracker implements Store {
         }
     }
 
-    private void prepareTable(String tableName) {
-        String createTable = String.format("CREATE TABLE IF NOT EXISTS %s(%s, %s, %s);",
-                tableName,
-                "item_id serial primary key",
-                "name VARCHAR(255) NOT NULL",
-                "created DATE NOT NULL"
-        );
-        try (Statement s = cn.createStatement()) {
-            s.execute(createTable);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void close() throws SQLException {
         if (cn != null) {
@@ -63,17 +48,32 @@ public class SqlTracker implements Store {
     public Item add(Item item) {
         String sql = String.format("INSERT INTO %s(name, created) VALUES(?, ?)",
                 this.tableName);
-        Timestamp timestampFromLDT = Timestamp.valueOf(item.getCreated());
+        Timestamp timestamp = Timestamp.valueOf(item.getCreated());
+        Item result = new Item(item.getName());
 
-        try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
+        try (PreparedStatement ps = this.cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item.getName());
-            ps.setTimestamp(2, timestampFromLDT);
-            ps.execute();
+            ps.setTimestamp(2, timestamp);
+            int affectedRows = ps.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Вставка не удалась, ни одна запись не была изменена.");
+            }
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getInt(1));
+                    result.setId(generatedKeys.getInt(1));
+                    result.setCreated(item.getCreated());
+                } else {
+                    throw new SQLException("Не удалось получить сгенерированный ключ.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 
     @Override
@@ -118,10 +118,10 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public List<Item> findByName(String key) {
+    public List<Item> findByName(String name) {
         String sql = String.format("SELECT * FROM %s WHERE name = '%s'",
                 this.tableName,
-                key);
+                name);
 
         return getItems(sql);
     }
@@ -133,19 +133,6 @@ public class SqlTracker implements Store {
             result = fillingObject(ps);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        return result;
-    }
-
-    private List<Item> fillingObject(PreparedStatement ps) throws SQLException {
-        List<Item> result = new ArrayList<>();
-        ResultSet resultSet = ps.executeQuery();
-        while (resultSet.next()) {
-            Item item = new Item();
-            item.setId(resultSet.getInt("item_id"));
-            item.setName(resultSet.getString("name"));
-            item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-            result.add(item);
         }
         return result;
     }
@@ -163,6 +150,21 @@ public class SqlTracker implements Store {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
+    }
+
+    private List<Item> fillingObject(PreparedStatement ps) throws SQLException {
+        List<Item> result = new ArrayList<>();
+        try (ResultSet resultSet = ps.executeQuery()) {
+            while (resultSet.next()) {
+                Item item = new Item();
+                item.setId(resultSet.getInt("item_id"));
+                item.setName(resultSet.getString("name"));
+                item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                result.add(item);
+            }
+        }
+
         return result;
     }
 }

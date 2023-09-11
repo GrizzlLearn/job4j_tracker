@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.*;
 
 public class ItemAscByNameTest {
 
@@ -31,6 +30,6 @@ public class ItemAscByNameTest {
             add(new Item("555"));
 
         }};
-        assertThat(items, is(expected));
+        assertThat(items).isEqualTo(expected);
     }
 }
