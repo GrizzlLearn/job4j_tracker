@@ -48,12 +48,11 @@ public class SqlTracker implements Store {
     public Item add(Item item) {
         String sql = String.format("INSERT INTO %s(name, created) VALUES(?, ?)",
                 this.tableName);
-        Timestamp timestamp = Timestamp.valueOf(item.getCreated());
         Item result = new Item(item.getName());
 
         try (PreparedStatement ps = this.cn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, item.getName());
-            ps.setTimestamp(2, timestamp);
+            ps.setTimestamp(2, Timestamp.valueOf(item.getCreated().withNano(0)));
             int affectedRows = ps.executeUpdate();
 
             if (affectedRows == 0) {
