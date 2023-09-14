@@ -79,7 +79,7 @@ public class SqlTracker implements Store {
     public boolean replace(int id, Item item) {
         int tmp = 0;
 
-        String sql = String.format("UPDATE %s SET name = ?, created = ? WHERE item_id = ?",
+        String sql = String.format("UPDATE %s SET name = ?, created = ? WHERE id = ?",
                 this.tableName);
         Timestamp timestampFromLDT = Timestamp.valueOf(item.getCreated());
 
@@ -97,7 +97,7 @@ public class SqlTracker implements Store {
 
     @Override
     public void delete(int id) {
-        String sql = String.format("DELETE FROM %s WHERE item_id = ?",
+        String sql = String.format("DELETE FROM %s WHERE id = ?",
                 this.tableName);
 
         try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
@@ -139,13 +139,14 @@ public class SqlTracker implements Store {
     @Override
     public Item findById(int id) {
         Item result = new Item();
-        String sql = String.format("SELECT * FROM %s WHERE item_id = ?",
+        String sql = String.format("SELECT * FROM %s WHERE id = ?",
                 this.tableName
         );
 
         try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            result = fillingObject(ps).get(0);
+            List<Item> tmp = fillingObject(ps);
+            result = tmp.get(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -157,9 +158,9 @@ public class SqlTracker implements Store {
         try (ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
                 Item item = new Item();
-                item.setId(resultSet.getInt("item_id"));
-                item.setName(resultSet.getString("name"));
-                item.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+                item.setId(resultSet.getInt(1));
+                item.setName(resultSet.getString(2));
+                item.setCreated(resultSet.getTimestamp(3).toLocalDateTime());
                 result.add(item);
             }
         }
