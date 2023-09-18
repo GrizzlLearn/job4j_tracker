@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 public class SqlTracker implements Store {
@@ -138,7 +139,7 @@ public class SqlTracker implements Store {
 
     @Override
     public Item findById(int id) {
-        Item result = new Item();
+        Item result = null;
         String sql = String.format("SELECT * FROM %s WHERE id = ?",
                 this.tableName
         );
@@ -146,7 +147,9 @@ public class SqlTracker implements Store {
         try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
             ps.setInt(1, id);
             List<Item> tmp = fillingObject(ps);
-            result = tmp.get(0);
+            if (tmp.size() > 0) {
+                result = tmp.get(0);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
