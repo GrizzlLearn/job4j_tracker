@@ -97,16 +97,18 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
+        int result = 0;
         String sql = String.format("DELETE FROM %s WHERE id = ?",
                 this.tableName);
 
         try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            ps.execute();
+            result = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package ru.job4j.tracker;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -47,7 +45,8 @@ public class SqlTrackerTest {
         }
     }
 
-/*    @Test
+    @Disabled
+    @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
@@ -56,25 +55,29 @@ public class SqlTrackerTest {
         //item.setId(tracker.findByName(item.getName()).get(0).getId());
         assertThat(tracker.findById(item.getId())).isEqualTo(tmpItem);
         //assertThat(item).isEqualTo(tmpItem);
-    }*/
+    }
 
-/*    @Test
+    @Disabled
+    @Test
     public void testFindById() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         Item tmpItem = tracker.add(item);
         assertThat(tracker.findById(tmpItem.getId())).isEqualTo(tmpItem);
-    }*/
+    }
 
-/*    @Test
+    @Disabled
+    @Test
     public void testFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("item");
         tracker.add(item);
         assertThat(tracker.findByName(item.getName()).get(0)).isEqualTo(item);
-    }*/
+    }
 
-/*    @Test
+
+    @Disabled
+    @Test
     public void testReplace() {
         SqlTracker tracker = new SqlTracker(connection);
         Item item = new Item("One");
@@ -83,9 +86,10 @@ public class SqlTrackerTest {
         Item newItem = new Item("New One");
         tracker.replace(tracker.findById(item.getId()).getId(), newItem);
         assertThat(tracker.findById(item.getId())).isEqualTo(newItem);
-    }*/
+    }
 
-/*    @Test
+    @Disabled
+    @Test
     public void testDelete() {
         SqlTracker tracker = new SqlTracker(connection);
         Item one = new Item("One");
@@ -97,7 +101,7 @@ public class SqlTrackerTest {
         tracker.delete(one.getId());
         assertThat(tracker.findAll()).hasSize(1);
         assertThat(tracker.findByName(two.getName()).get(0)).isEqualTo(two);
-    }*/
+    }
 
     @Test
     public void testFIndAll() {
