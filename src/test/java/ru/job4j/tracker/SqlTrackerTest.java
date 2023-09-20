@@ -75,7 +75,6 @@ public class SqlTrackerTest {
         assertThat(tracker.findByName(item.getName()).get(0)).isEqualTo(item);
     }
 
-
     @Disabled
     @Test
     public void testReplace() {

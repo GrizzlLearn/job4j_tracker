@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Properties;
 
 public class SqlTracker implements Store {
@@ -97,18 +96,16 @@ public class SqlTracker implements Store {
     }
 
     @Override
-    public int delete(int id) {
-        int result = 0;
+    public void delete(int id) {
         String sql = String.format("DELETE FROM %s WHERE id = ?",
                 this.tableName);
 
         try (PreparedStatement ps = this.cn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            result = ps.executeUpdate();
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return result;
     }
 
     @Override
