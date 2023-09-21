@@ -48,58 +48,53 @@ public class SqlTrackerTest {
     @Test
     public void whenSaveItemAndFindByGeneratedIdThenMustBeTheSame() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        Item tmpItem = tracker.add(item);
-        assertThat(item).isEqualTo(tmpItem);
+        Item one = new Item("One");
+        Item tmpItem = tracker.add(one);
+        assertThat(one).isEqualTo(tmpItem);
     }
 
-    @Disabled
     @Test
     public void testFindById() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        Item tmpItem = tracker.add(item);
+        Item one = new Item("One");
+        Item tmpItem = tracker.add(one);
         assertThat(tracker.findById(tmpItem.getId())).isEqualTo(tmpItem);
     }
 
-    @Disabled
     @Test
     public void testFindByName() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("item");
-        tracker.add(item);
-        assertThat(tracker.findByName(item.getName()).get(0)).isEqualTo(item);
+        Item one = new Item("One");
+        Item tmpOne = tracker.add(one);
+        assertThat(tracker.findByName(one.getName()).get(0)).isEqualTo(tmpOne);
     }
 
-    @Disabled
     @Test
     public void testReplace() {
         SqlTracker tracker = new SqlTracker(connection);
-        Item item = new Item("One");
-        tracker.add(item);
-        item.setId(tracker.findByName(item.getName()).get(0).getId());
-        Item newItem = new Item("New One");
-        tracker.replace(tracker.findById(item.getId()).getId(), newItem);
-        assertThat(tracker.findById(item.getId())).isEqualTo(newItem);
+        Item one = new Item("One");
+        Item two = new Item("Two");
+        Item tmpOne = tracker.add(one);
+        Item tmpTwo = tracker.add(two);
+        tracker.replace(tracker.findByName(one.getName()).get(0).getId(), tmpTwo);
+        assertThat(tracker.findById(tmpOne.getId()).getName()).isEqualTo(tmpTwo.getName());
+        assertThat(tracker.findById(tmpOne.getId()).getCreated()).isEqualTo(tmpTwo.getCreated());
     }
 
-    @Disabled
     @Test
     public void testDelete() {
         SqlTracker tracker = new SqlTracker(connection);
         Item one = new Item("One");
         Item two = new Item("Two");
-        tracker.add(one);
-        one.setId(tracker.findByName(one.getName()).get(0).getId());
-        tracker.add(two);
-        two.setId(tracker.findByName(two.getName()).get(0).getId());
-        tracker.delete(one.getId());
+        Item tmpOne = tracker.add(one);
+        Item tmpTwo = tracker.add(two);
+        tracker.delete(tmpOne.getId());
         assertThat(tracker.findAll()).hasSize(1);
-        assertThat(tracker.findByName(two.getName()).get(0)).isEqualTo(two);
+        assertThat(tracker.findByName(two.getName()).get(0)).isEqualTo(tmpTwo);
     }
 
     @Test
-    public void testFIndAll() {
+    public void testFindAll() {
         SqlTracker tracker = new SqlTracker(connection);
         Item one = new Item("One");
         Item two = new Item("Two");
