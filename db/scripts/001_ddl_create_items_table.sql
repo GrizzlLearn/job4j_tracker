@@ -1,5 +1,5 @@
-create table items (
-    id serial primary key,
-    name text,
-    created timestamp
+CREATE TABLE items (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    created TIMESTAMP NOT NULL
 );
