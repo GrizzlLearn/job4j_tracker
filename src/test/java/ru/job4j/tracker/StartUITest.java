@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class StartUITest {
     @Test
@@ -24,7 +26,7 @@ public class StartUITest {
                 new ExitAction(output)
         );
         new StartUI(output).init(in, memTracker, actions);
-        assertThat(memTracker.findAll().get(0).getName(), is("Item name"));
+        assertThat(memTracker.findAll().get(0).getName()).isEqualTo("Item name");
     }
 
     @Test
@@ -41,7 +43,7 @@ public class StartUITest {
                 new ExitAction(output)
         );
         new StartUI(output).init(in, memTracker, actions);
-        assertThat(memTracker.findById(item.getId()).getName(), is(replacedName));
+        assertThat(memTracker.findById(item.getId()).getName()).isEqualTo(replacedName);
     }
 
     @Test
@@ -57,7 +59,7 @@ public class StartUITest {
                 new ExitAction(output)
         );
         new StartUI(output).init(in, memTracker, actions);
-        assertNull(memTracker.findById(item.getId()));
+        assertThat(memTracker.findById(item.getId())).isNull();
     }
 
     @Test
@@ -75,17 +77,17 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
-                        + "0. Replace item" + ln
-                        + "1. Exit" + ln
-                        + "=== Replace item ===" + ln
-                        + "Заявка изменена успешно." + ln
-                        + "Menu:" + ln
-                        + "0. Replace item" + ln
-                        + "1. Exit" + ln
-                        + "=== Exit ===" + ln
-        ));
+                + "0. Replace item" + ln
+                + "1. Exit" + ln
+                + "=== Replace item ===" + ln
+                + "Заявка изменена успешно." + ln
+                + "Menu:" + ln
+                + "0. Replace item" + ln
+                + "1. Exit" + ln
+                + "=== Exit ===" + ln
+        );
     }
 
     @Test
@@ -102,17 +104,17 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
-                        + "0. Find all Items" + ln
-                        + "1. Exit" + ln
-                        + "=== Find all items ===" + ln
-                        + one + ln
-                        + "Menu:" + ln
-                        + "0. Find all Items" + ln
-                        + "1. Exit" + ln
-                        + "=== Exit ===" + ln
-        ));
+                + "0. Find all Items" + ln
+                + "1. Exit" + ln
+                + "=== Find all items ===" + ln
+                + one + ln
+                + "Menu:" + ln
+                + "0. Find all Items" + ln
+                + "1. Exit" + ln
+                + "=== Exit ===" + ln
+        );
     }
 
     @Test
@@ -129,7 +131,7 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by name" + ln
                         + "1. Exit" + ln
@@ -139,7 +141,7 @@ public class StartUITest {
                         + "0. Find item by name" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -157,7 +159,7 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by name" + ln
                         + "1. Exit" + ln
@@ -167,7 +169,7 @@ public class StartUITest {
                         + "0. Find item by name" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -184,7 +186,7 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
@@ -194,7 +196,7 @@ public class StartUITest {
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -212,7 +214,7 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
+        assertThat(out.toString()).isEqualTo(
                 "Menu:" + ln
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
@@ -222,7 +224,7 @@ public class StartUITest {
                         + "0. Find item by id" + ln
                         + "1. Exit" + ln
                         + "=== Exit ===" + ln
-        ));
+        );
     }
 
     @Test
@@ -237,14 +239,76 @@ public class StartUITest {
         );
         new StartUI(out).init(in, memTracker, actions);
         String ln = System.lineSeparator();
-        assertThat(out.toString(), is(
-                        "Menu:" + ln
-                                + "0. Exit" + ln
-                                + "Wrong input, you can select: 0 .. 0" + ln
-                                + "Menu:" + ln
-                                + "0. Exit" + ln
-                                + "=== Exit ===" + ln
-                )
+        assertThat(out.toString()).isEqualTo(
+                "Menu:" + ln
+                        + "0. Exit" + ln
+                        + "Wrong input, you can select: 0 .. 0" + ln
+                        + "Menu:" + ln
+                        + "0. Exit" + ln
+                        + "=== Exit ===" + ln
         );
+    }
+
+    @Test
+    public void whenItemWasReplacedSuccessfully() {
+        Output output = new StubOutput();
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("Replaced item"));
+        String replacedName = "New item name";
+        ReplaceAction replaceAction = new ReplaceAction(output);
+
+        Input input = mock(Input.class);
+
+        when(input.askInt(any(String.class))).thenReturn(item.getId());
+        when(input.askStr(any(String.class))).thenReturn(replacedName);
+
+        replaceAction.execute(input, memTracker);
+
+        String ln = System.lineSeparator();
+        assertThat(output.toString()).isEqualTo(
+                "=== Replace item ===" + ln
+                        + "Заявка изменена успешно." + ln
+        );
+    }
+
+    @Test
+    public void mockWhenDeleteItem() {
+        Output output = new StubOutput();
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("deleted item"));
+        DeleteAction deleteAction = new DeleteAction(output);
+        Input input = mock(Input.class);
+        when(input.askInt(any(String.class))).thenReturn(item.getId());
+        deleteAction.execute(input, memTracker);
+
+        assertThat(memTracker.findById(item.getId())).isNull();
+    }
+
+    @Test
+    public void mockFindById() {
+        Output output = new StubOutput();
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("Find by id item"));
+        FindByIdAction findByIdAction = new FindByIdAction(output);
+        Input input = mock(Input.class);
+        when(input.askInt(any(String.class))).thenReturn(item.getId());
+        findByIdAction.execute(input, memTracker);
+
+        assertThat(memTracker.findById(item.getId())).isEqualTo(item);
+    }
+
+    @Test
+    public void mockFindByNameAction() {
+        Output output = new StubOutput();
+        MemTracker memTracker = new MemTracker();
+        Item item = memTracker.add(new Item("Find by name item"));
+        FindByNameAction findByNameAction = new FindByNameAction(output);
+        Input input = mock(Input.class);
+        when(input.askStr(any(String.class))).thenReturn(item.getName());
+        findByNameAction.execute(input, memTracker);
+
+        assertThat(memTracker.findByName(item.getName()).size()).isEqualTo(1);
+        assertThat(memTracker.findByName(item.getName()).contains(item)).isTrue();
+        assertThat(memTracker.findByName(item.getName()).get(0)).isEqualTo(item);
     }
 }
