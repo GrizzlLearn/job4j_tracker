@@ -13,20 +13,9 @@ public class Item {
     private LocalDateTime created = LocalDateTime.now().withNano(0);
 
     public Item() {
-
     }
 
     public Item(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Item{"
-                + "id=" + id
-                + ", name='" + name
-                + '\''
-                + ", created=" + created.format(FORMATTER)
-                + '}';
     }
 }
