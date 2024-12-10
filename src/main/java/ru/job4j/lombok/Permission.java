@@ -13,18 +13,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder(builderMethodName = "of")
+@AllArgsConstructor
+@Getter
+@Setter
 public class Permission {
     @EqualsAndHashCode.Include
-    private int id;
+    private final int id;
 
-    @Getter
-    @Setter
-    @NonNull
     private String name;
 
-    @NonNull
-    @Getter
-    @Setter
-    @Singular("rule")
+    @Singular("rules")
     private List<String> rules;
 }
